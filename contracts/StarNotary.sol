@@ -71,6 +71,9 @@ contract StarNotary is ERC721 {
         // Rubric: Add a function called exchangeStars, so 2 users can exchange their star tokens...
         // Do not worry about the price, just write code to exchange stars between users.
         //1. Passing to star tokenId you will need to check if the owner of _tokenId1 or _tokenId2 is the sender
+        //2. You don't have to check for the price of the token (star)
+        //3. Get the owner of the two tokens (ownerOf(_tokenId1), ownerOf(_tokenId2)
+        //4. Use _transferFrom function to exchange the tokens.
         address ownerAddress1 = ownerOf(_tokenId1);
         address ownerAddress2 = ownerOf(_tokenId2);
         require(
@@ -78,24 +81,17 @@ contract StarNotary is ERC721 {
             "Sender must own the star"
         );
         _transferFrom(ownerAddress1, ownerAddress2, _tokenId1);
-        _transferFrom(ownerAddress2, ownerAddress1, _tokenId2);
-        // require(msg.sender == ownerAddress1, "Sender must own a star");
-        // require(msg.sender == ownerAddress2, "Sender must own a star");
-        // _transferFrom(ownerAddress1, msg.sender, _tokenId2);
-        // _transferFrom(ownerAddress2, msg.sender, _tokenId1);
-        //2. You don't have to check for the price of the token (star)
-        //3. Get the owner of the two tokens (ownerOf(_tokenId1), ownerOf(_tokenId2)
-        //4. Use _transferFrom function to exchange the tokens.
+        _transferFrom(ownerAddress2, ownerAddress1, _tokenId2);   
     }
 
     // Implement Task 1 Transfer Stars
     function transferStar(address _to1, uint256 _tokenId) public {
         //1. Check if the sender is the ownerOf(_tokenId)
+        //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
         require(
             _isApprovedOrOwner(msg.sender, _tokenId),
             "Sender is not the owner of the star."
         );
-        //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
         _transferFrom(msg.sender, _to1, _tokenId);
     }
 }
